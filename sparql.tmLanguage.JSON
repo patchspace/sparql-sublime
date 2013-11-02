@@ -1,0 +1,91 @@
+{
+	"name": "SPARQL",
+ 	"scopeName": "source.sparql",
+ 	"fileTypes": ["rq"],
+ 	"patterns": [
+ 		{
+			"name": 	"keyword.sparql",
+  			"comment": 	"Keywords",
+ 			"match": 	"\\b(?i:base|prefix|select|distinct|reduced|from|named|construct|ask|describe|where|graph|bind|as|filter|optional|union|order|by|limit|offset|values)\\b",
+		},
+		{
+			"name": 	"support.function.sparql",
+			"comment":	"SPARQL built-in functions",
+			"match":	"\\b(?i:concat|regex|asc|desc|bound|isiri|isuri|isblank|isliteral|str|lang|datatype|sameterm|langmatches)\\b"
+		},
+		{
+			"name": 	"string.uri.sparql",
+			"comment": 	"URI",
+			// Best attempt to convert IRI_REF:
+			// http://www.w3.org/TR/rdf-sparql-query/#rIRI_REF
+			"match": 	"<[^<>\"{}|^`\\]\\\\]*>",
+		},
+		{
+			"name": 	"constant.complex.sparql",
+			"comment": 	"Prefix / prefixed URI",
+			// PN_CHARS_BASE is insane
+			// http://www.w3.org/TR/rdf-sparql-query/#rPN_CHARS_BASE
+			"match": 	"(\\w*:)([^\\s]*)",
+	        "captures": {
+	            "1": { "name": "constant.other.sparql" },
+	            "2": { "name": "entity.name.class.sparql" }
+	         }
+		},
+		{
+			"name":		"entity.name.class.rdfs-type.sparql",
+			"comment":	"The special triple predicate 'a'",
+			"match":    "\\sa\\s"
+		},
+		{
+			"name": "variable.other.sparql",
+			"match": "[?$]\\w+"
+		},
+		{
+			"name": 	"literal.sparql",
+			"comment": 	"Typed literal",
+			// Note duplication of IRI_REF
+			"match":	"(\"[^\"]*\")(\\^\\^)(<[^<>\"{}|^`\\]\\\\]*>|\\w*:[^\\s]+)",
+			"captures":   {
+				"1": { "name": "string.sparql" },
+				"2": { "name": "keyword.operator.sparql" },
+				"3": { "name": "support.type.sparql" }
+			}
+		},
+		{
+			"name": 	"string.sparql",
+			"comment": 	"String literal",
+			// This is an attempt to implement the following BNF combinations:
+			// STRING_LITERAL_LONG1 | STRING_LITERAL_LONG2 | STRING_LITERAL1 | STRING_LITERAL2
+			// Creating an incorrectly highlighted example of a triple-quoted string
+			// turned out to be really hard, so I can't promise the first two options
+			// are correct!
+			"match":	"('''(?:(?:'|'')?(?:[^'\\\\]|\\\\[tbnrf\\\"']))*'''|\"\"\"(?:(?:\"|\"\")?([^\"\\\\]|\\\\[tbnrf\\\"']))*\"\"\"|'(?:(?:[^\\x22\\x5C\\xA\\xD])|\\\\[tbnrf\\\"'])*'|\"(?:(?:[^\\x22\\x5C\\xA\\xD])|\\\\[tbnrf\\\"'])*\"|'''.*'''|'[^']*')(@[a-zA-Z-]+)?",
+			"captures":   {
+				"1": { "name": "string.sparql" },
+				"2": { "name": "keyword.operator.sparql" },
+				"3": { "name": "support.type.sparql" }
+			}
+		},
+		{
+			"name":		"constant.numeric.sparql",
+			"comment":  "Numeric literal",
+			"match": "[+-]?(?:\\d+|[0-9]+\\.[0-9]*|\\.[0-9]+(?:[eE][+-]?\\d+)?)"
+		},
+		{
+			"name":		"constant.language.sparql",
+			"comment":  "Boolean",
+			"match":	"\\b(?i:true|false)\\b"
+		},
+		{
+			"name":		"keyword.operator.sparql",
+			"comment":	"SPARQL operators",
+			"match":	"(?:\\|\\||&&|=|!=|<|>|<=|>=|\\*|/|\\+|-)"
+		},
+		{
+			"name":		"comment.line.number-sign.sparql",
+			"comment":	"Comments",
+			"match":	"#.*$"
+		}
+	],
+	"uuid": "5a91f9b9-c324-40e6-8bd2-ed959b3adda9"
+}
