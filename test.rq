@@ -144,6 +144,7 @@ DATATYPE(A)
 
 true || false
 true && false
+TRUE || false
 1 = 2
 1 != 2
 1 < 2
