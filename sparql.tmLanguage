@@ -51,7 +51,7 @@
 			<key>comment</key>
 			<string>Prefix / prefixed URI</string>
 			<key>match</key>
-			<string>(\w*:)([^\s]*)</string>
+			<string>(\w*:)([^\s|/^*?+{)]*)</string>
 			<key>name</key>
 			<string>constant.complex.sparql</string>
 		</dict>
@@ -65,7 +65,7 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>[?$]\w+</string>
+			<string>(?&lt;!\w)[?$]\w+</string>
 			<key>name</key>
 			<string>variable.other.sparql</string>
 		</dict>
@@ -122,6 +122,25 @@
 			<string>string.sparql</string>
 		</dict>
 		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.sparql</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.sparql</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\{\s*(\d+)\s*((?:,\s*(\d+)?)?)+\s*\}</string>
+			<key>name</key>
+			<string>keyword.operator.complex.sparql</string>
+		</dict>
+		<dict>
 			<key>comment</key>
 			<string>Numeric literal</string>
 			<key>match</key>
@@ -141,7 +160,7 @@
 			<key>comment</key>
 			<string>SPARQL operators</string>
 			<key>match</key>
-			<string>(?:\|\||&amp;&amp;|=|!=|&lt;|&gt;|&lt;=|&gt;=|\*|/|\+|-)</string>
+			<string>(?:\|\||&amp;&amp;|=|!=|&lt;|&gt;|&lt;=|&gt;=|\*|/|\+|-|\||\^|\?)</string>
 			<key>name</key>
 			<string>keyword.operator.sparql</string>
 		</dict>
