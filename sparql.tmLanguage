@@ -14,7 +14,7 @@
 			<key>comment</key>
 			<string>Keywords</string>
 			<key>match</key>
-			<string>\b(?i:base|prefix|select|distinct|reduced|from|named|construct|ask|describe|where|graph|bind|as|filter|optional|union|order|by|limit|offset|values)\b</string>
+			<string>\b(?i:base|prefix|select|distinct|reduced|from|named|construct|ask|describe|where|graph|bind|as|filter|optional|union|order|by|limit|offset|values|insert data|delete data|with|delete|insert|clear|silent|default|all|create|drop|copy|move|add|to|using|service|not exists|exists|not in|in|minus)\b</string>
 			<key>name</key>
 			<string>keyword.sparql</string>
 		</dict>
@@ -22,7 +22,7 @@
 			<key>comment</key>
 			<string>SPARQL built-in functions</string>
 			<key>match</key>
-			<string>\b(?i:concat|regex|asc|desc|bound|isiri|isuri|isblank|isliteral|str|lang|datatype|sameterm|langmatches)\b</string>
+			<string>\b(?i:concat|regex|asc|desc|bound|isiri|isuri|isblank|isliteral|str|lang|datatype|sameterm|langmatches|avg|count|group_concat|separator|max|min|sample|sum|iri|bnode|strdt|uuid|struuid|strlen|strlen|strlen|substr|ucase|lcase|strstarts|strends|contains|strbefore|strafter|encode_for_uri|replace|abs|round|ceil|floor|rand|now|year|month|day|hours|minutes|seconds|timezone|tz|md5|sha1|sha256|sha384|sha512|coalesce|if|)\b</string>
 			<key>name</key>
 			<string>support.function.sparql</string>
 		</dict>
@@ -51,7 +51,7 @@
 			<key>comment</key>
 			<string>Prefix / prefixed URI</string>
 			<key>match</key>
-			<string>(\w*:)([^\s|/^*?+{)]*)</string>
+			<string>(\w*:)([^\s|/^*?+{}()]*)</string>
 			<key>name</key>
 			<string>constant.complex.sparql</string>
 		</dict>
@@ -144,7 +144,7 @@
 			<key>comment</key>
 			<string>Numeric literal</string>
 			<key>match</key>
-			<string>[+-]?(?:\d+|[0-9]+\.[0-9]*|\.[0-9]+(?:[eE][+-]?\d+)?)</string>
+			<string>\b[+-]?(?:\d+|[0-9]+\.[0-9]*|\.[0-9]+(?:[eE][+-]?\d+)?)\b</string>
 			<key>name</key>
 			<string>constant.numeric.sparql</string>
 		</dict>
@@ -160,7 +160,7 @@
 			<key>comment</key>
 			<string>SPARQL operators</string>
 			<key>match</key>
-			<string>(?:\|\||&amp;&amp;|=|!=|&lt;|&gt;|&lt;=|&gt;=|\*|/|\+|-|\||\^|\?)</string>
+			<string>(?:\|\||&amp;&amp;|=|!=|&lt;|&gt;|&lt;=|&gt;=|\*|/|\+|-|\||\^|\?|\!)</string>
 			<key>name</key>
 			<string>keyword.operator.sparql</string>
 		</dict>
