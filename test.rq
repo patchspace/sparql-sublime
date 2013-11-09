@@ -181,6 +181,9 @@ REGEX("string", "pattern")
 # SPARQL 1.1 Query Functions
 # http://www.w3.org/TR/sparql11-query/#func-rdfTerms
 
+# Some of these contain a bit of a hack to not include the trailing
+# closing ) in a type URI
+
 COALESCE(?a, ?b)
 IF(bound(?y), "yes", "no")
 FILTER (NOT EXISTS { ?a ?b ?c })

@@ -91,7 +91,7 @@
 			<key>comment</key>
 			<string>Typed literal</string>
 			<key>match</key>
-			<string>("[^"]*")(\^\^)(&lt;[^&lt;&gt;"{}|^`\]\\]*&gt;|\w*:[^\s]+)</string>
+			<string>("[^"]*")(\^\^)(&lt;[^&lt;&gt;"{}|^`\]\\]*&gt;|\w*:[^\s)]+)</string>
 			<key>name</key>
 			<string>literal.sparql</string>
 		</dict>

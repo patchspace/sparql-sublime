@@ -54,7 +54,7 @@
 			"name": 	"literal.sparql",
 			"comment": 	"Typed literal",
 			// Note duplication of IRI_REF
-			"match":	"(\"[^\"]*\")(\\^\\^)(<[^<>\"{}|^`\\]\\\\]*>|\\w*:[^\\s]+)",
+			"match":	"(\"[^\"]*\")(\\^\\^)(<[^<>\"{}|^`\\]\\\\]*>|\\w*:[^\\s)]+)",
 			"captures":   {
 				"1": { "name": "string.sparql" },
 				"2": { "name": "keyword.operator.sparql" },
