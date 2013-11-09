@@ -1,17 +1,27 @@
+// I found an ANTLR grammar for SPARQL so I've been through that once but I
+// didn't try to catch every last case. The file test.rq explains some of
+// the scenarios.
+// http://www.antlr3.org/grammar/1200929755392/Sparql.g
+//
+// Also I made a bit of an aesthetic distinction between keywords and functions
+// in some cases. Hopefully it's a good balance between distinguisability and
+// conformance to the offical syntax but I'm open to alterations.
 {
 	"name": "SPARQL",
+	"uuid": "5a91f9b9-c324-40e6-8bd2-ed959b3adda9",
  	"scopeName": "source.sparql",
  	"fileTypes": ["rq"],
  	"patterns": [
  		{
 			"name": 	"keyword.sparql",
   			"comment": 	"Keywords",
- 			"match": 	"\\b(?i:base|prefix|select|distinct|reduced|from|named|construct|ask|describe|where|graph|bind|as|filter|optional|union|order|by|limit|offset|values)\\b",
+ 			"match": 	"\\b(?i:base|prefix|select|distinct|reduced|from|named|construct|ask|describe|where|graph|bind|as|filter|optional|union|order|by|limit|offset|values|insert data|delete data|with|delete|insert|clear|silent|default|all|create|drop|copy|move|add|to|using|service|not exists|exists|not in|in|minus)\\b",
 		},
 		{
 			"name": 	"support.function.sparql",
 			"comment":	"SPARQL built-in functions",
-			"match":	"\\b(?i:concat|regex|asc|desc|bound|isiri|isuri|isblank|isliteral|str|lang|datatype|sameterm|langmatches)\\b"
+			// I included `separator` here, which is a keyword argument to `group_concat`
+			"match":	"\\b(?i:concat|regex|asc|desc|bound|isiri|isuri|isblank|isliteral|str|lang|datatype|sameterm|langmatches|avg|count|group_concat|separator|max|min|sample|sum|iri|bnode|strdt|uuid|struuid|strlen|strlen|strlen|substr|ucase|lcase|strstarts|strends|contains|strbefore|strafter|encode_for_uri|replace|abs|round|ceil|floor|rand|now|year|month|day|hours|minutes|seconds|timezone|tz|md5|sha1|sha256|sha384|sha512|coalesce|if|)\\b"
 		},
 		{
 			"name": 	"string.uri.sparql",
@@ -25,7 +35,7 @@
 			"comment": 	"Prefix / prefixed URI",
 			// PN_CHARS_BASE is insane
 			// http://www.w3.org/TR/rdf-sparql-query/#rPN_CHARS_BASE
-			"match": 	"(\\w*:)([^\\s|/^*?+{)]*)",
+			"match": 	"(\\w*:)([^\\s|/^*?+{}()]*)",
 	        "captures": {
 	            "1": { "name": "constant.other.sparql" },
 	            "2": { "name": "entity.name.class.sparql" }
@@ -77,7 +87,7 @@
 		{
 			"name":		"constant.numeric.sparql",
 			"comment":  "Numeric literal",
-			"match": 	"[+-]?(?:\\d+|[0-9]+\\.[0-9]*|\\.[0-9]+(?:[eE][+-]?\\d+)?)"
+			"match": 	"\\b[+-]?(?:\\d+|[0-9]+\\.[0-9]*|\\.[0-9]+(?:[eE][+-]?\\d+)?)\\b"
 		},
 		{
 			"name":		"constant.language.sparql",
@@ -87,13 +97,12 @@
 		{
 			"name":		"keyword.operator.sparql",
 			"comment":	"SPARQL operators",
-			"match":	"(?:\\|\\||&&|=|!=|<|>|<=|>=|\\*|/|\\+|-|\\||\\^|\\?)"
+			"match":	"(?:\\|\\||&&|=|!=|<|>|<=|>=|\\*|/|\\+|-|\\||\\^|\\?|\\!)"
 		},
 		{
 			"name":		"comment.line.number-sign.sparql",
 			"comment":	"Comments",
 			"match":	"#.*$"
 		}
-	],
-	"uuid": "5a91f9b9-c324-40e6-8bd2-ed959b3adda9"
+	]
 }

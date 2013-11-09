@@ -1,6 +1,10 @@
 # This is a test SPARQL file - if it looks pretty, everything is a-ok.
 # If everything's not a-ok, I missed an example of something that should
 # look pretty, but doesn't.
+#
+# Oh, and this example file is a bit all over the shop as I kept discovering
+# things it should highlight, but doesn't. Don't expect to find things in a
+# nice well-organised order.
 
 BASE          <http://example.org/book/>
 PREFIX :      <http://example.com/>
@@ -56,6 +60,13 @@ WHERE {
   FILTER regex(?title, "^SPARQL")
 }
 
+FILTER (!?a)
+# This checks we don't highlight the first bracket of a prefixed:call…
+FILTER (fn:not(?a))
+FILTER (?a = ?b)
+FILTER (BOUND(?a))
+
+
 "chat"
 "chat\"more"
 'chat'@fr
@@ -106,6 +117,14 @@ ORDER BY DESC(?emp)
 
 SELECT DISTINCT ?name WHERE { ?x foaf:name ?name }
 SELECT REDUCED ?name WHERE { ?x foaf:name ?name }
+
+SELECT DISTINCT ?s
+WHERE {
+   ?s ?p ?o .
+   MINUS {
+      ?s foaf:givenName "Bob" .
+   }
+}
 
 SELECT ?name
 WHERE { ?x foaf:name ?name }
@@ -159,3 +178,113 @@ sameTerm(foo:a, bar:b)
 langMatches(lang(?title), "FR")
 REGEX("string", "pattern")
 
+# SPARQL 1.1 Query Functions
+# http://www.w3.org/TR/sparql11-query/#func-rdfTerms
+
+COALESCE(?a, ?b)
+IF(bound(?y), "yes", "no")
+FILTER (NOT EXISTS { ?a ?b ?c })
+2 IN (1, 2, 3)
+2 NOT IN (1, 2, 3)
+IRI("http://example/")
+BNODE("nothing to see here")
+STRDT("123", xsd:integer)
+UUID()
+STRUUID()
+strlen("chat")
+strlen("chat"@en)
+strlen("chat"^^xsd:string)
+substr("foobar"^^xsd:string, 4, 1)
+ucase("foo"@en)
+lcase("BAR"^^xsd:string)
+strStarts("foobar"@en, "foo"^^xsd:string)
+strEnds("foobar"^^xsd:string, "bar")
+contains("foobar", "bar")
+strbefore("abc"^^xsd:string,"")
+strafter("abc"@en, ""@en)
+encode_for_uri("Los Angeles"^^xsd:string)
+replace("abab", "B.", "Z","i")
+abs(-1.5)
+round(-2.5)
+ceil(10.5)
+floor(-10.5)
+rand()
+now()
+year("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)
+month("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)
+day("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)
+hours("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)
+minutes("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)
+seconds("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)
+timezone("2011-01-10T14:45:13.815-05:00"^^xsd:dateTime)
+tz("2011-01-10T14:45:13.815Z"^^xsd:dateTime)
+MD5("abc")
+SHA1("abc"^^xsd:string)
+SHA256("abc")
+SHA384("abc"^^xsd:string)
+SHA512("abc")
+
+# To prove an unknown function doesn't get numbers highlighted as integers
+foo123()
+foo123abc()
+
+# SPARQL 1.1 Aggregates
+# http://www.dajobe.org/talks/201105-sparql-11/
+
+AVG(?expr)
+COUNT(*) and COUNT(?expr)
+GROUP_CONCAT(?expr)
+GROUP_CONCAT(?expr; separator = ", ")
+MAX(?expr)
+MIN(?expr)
+SAMPLE(?expr)
+SUM(?expr)
+
+# SPARQL 1.1 Update
+# http://www.w3.org/TR/sparql11-update/#updateLanguage
+
+INSERT DATA {
+  <http://example/book1> dc:title "A new book" ;
+                         dc:creator "A.N.Other" .
+}
+
+DELETE DATA {
+  <http://example/book2> dc:title "David Copperfield" ;
+                         dc:creator "Edmund Wells" .
+}
+
+WITH <http://example/addresses>
+DELETE { ?person foaf:givenName 'Bill' }
+INSERT { ?person foaf:givenName 'William' }
+WHERE  { ?person foaf:givenName 'Bill' }
+
+WITH  <http://example/addresses>
+INSERT  { ?a ?b ?c }
+USING NAMED <http://example/foo>
+WHERE { ?a ?b ?c }
+
+CLEAR GRAPH <http://example/addresses>
+CLEAR SILENT <http://example/addresses>
+CLEAR DEFAULT
+CLEAR NAMED
+CLEAR ALL
+
+CREATE GRAPH <http://example/addresses>
+DROP GRAPH <http://example/addresses>
+COPY DEFAULT TO <http://example.org/named>
+MOVE DEFAULT TO <http://example.org/named>
+ADD DEFAULT TO <http://example.org/named>
+
+# SPARQL 1.1 Federated Query
+
+SELECT ?person ?interest ?known
+WHERE
+{
+  SERVICE <http://people.example.org/sparql> {
+    ?person foaf:name ?name .
+    OPTIONAL {
+      ?person foaf:interest ?interest .
+      SERVICE <http://people2.example.org/sparql> {
+        ?person foaf:knows ?known . } }
+  }
+}
