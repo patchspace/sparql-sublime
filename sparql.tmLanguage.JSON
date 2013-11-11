@@ -77,8 +77,8 @@
 			}
 		},
 		{
-			"name":		"keyword.operator.complex.sparql",
-			"match": 	"\\{\\s*(\\d+)\\s*((?:,\\s*(\\d+)?)?)+\\s*\\}",
+			"name":		"keyword.operator.range.complex.sparql",
+			"match": 	"\\{\\s*(\\d+)?(\\s*(?:,\\s*(\\d+)?)?)+\\s*\\}",
 			"captures":	{
 				"1": { "name": "constant.numeric.sparql" },
 				"3": { "name": "constant.numeric.sparql" }

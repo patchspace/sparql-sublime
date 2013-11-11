@@ -133,7 +133,6 @@ LIMIT 5
 OFFSET 10
 
 ASK { ?x foaf:name  "Alice" }
-
 # Property paths
 ASK { ?s foo:bar|baz:quux  ?p }
 ASK { ?s foo:bar/baz:quux  ?p }
@@ -145,6 +144,7 @@ ASK { ?s foo:bar{1}/baz:quux  ?p }
 ASK { ?s foo:bar{1,}/baz:quux  ?p }
 ASK { ?s foo:bar{1,2}/baz:quux  ?p }
 ASK { ?s foo:bar{ 1 , 2 }/baz:quux  ?p }
+ASK { ?s foo:bar{ , 2 }/baz:quux  ?p }
 ASK { ?s foo:bar/baz:quux/cow:moo  ?p }
 ASK { ?s (foo:bar|baz:quux)/cow:moo  ?p }
 
