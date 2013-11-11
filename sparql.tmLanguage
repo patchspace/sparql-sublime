@@ -136,9 +136,9 @@
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>\{\s*(\d+)\s*((?:,\s*(\d+)?)?)+\s*\}</string>
+			<string>\{\s*(\d+)?(\s*(?:,\s*(\d+)?)?)+\s*\}</string>
 			<key>name</key>
-			<string>keyword.operator.complex.sparql</string>
+			<string>keyword.operator.range.complex.sparql</string>
 		</dict>
 		<dict>
 			<key>comment</key>
