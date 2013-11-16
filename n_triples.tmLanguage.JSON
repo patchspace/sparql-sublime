@@ -1,0 +1,52 @@
+{
+	"name": "N-Triples",
+	"uuid": "f382d2fb-f67f-44c2-a190-83d7298960d9",
+ 	"scopeName": "source.ntriples",
+ 	"fileTypes": ["nt"],
+ 	"patterns": [
+ 		{
+ 			"name": 	"string.uri.ntriples",
+ 			"comment": 	"URI",
+ 			// Best attempt to convert IRI_REF:
+ 			// http://www.w3.org/TR/rdf-ntriples-query/#rIRI_REF
+ 			"match": 	"<[^<>\"{}|^`\\]\\\\]*>",
+ 		},
+ 		{
+ 			"name": 	"literal.ntriples",
+ 			"comment": 	"Typed literal",
+ 			// Note duplication of IRI_REF
+ 			"match":	"(\"[^\"]*\")(\\^\\^)(<[^<>\"{}|^`\\]\\\\]*>|\\w*:[^\\s)]+)",
+ 			"captures":   {
+ 				"1": { "name": "string.ntriples" },
+ 				"2": { "name": "keyword.operator.ntriples" },
+ 				"3": { "name": "support.type.ntriples" }
+ 			}
+ 		},
+ 		{
+			"name": 	"constant.complex.sparql",
+			"comment": 	"Blank node",
+ 			// Don't bother trying to match the blank node label grammar exactly,
+ 			// just highlight anything up to a space
+			"match": 	"(_:)([^\\s]+)",
+	        "captures": {
+	            "1": { "name": "constant.language.sparql" },
+	            "2": { "name": "entity.name.class.sparql" }
+	         }
+		},
+ 		{
+ 			"name": 	"constant.other.ntriples",
+ 			"comment": 	"String literal",
+ 			"match":	"(\"(?:(?:[^\\x22\\x5C\\xA\\xD])|\\\\[tbnrf\\\"'])*\")(@[a-zA-Z-]+)?",
+ 			"captures":   {
+ 				"1": { "name": "constant.other.ntriples" },
+ 				"2": { "name": "keyword.operator.ntriples" },
+ 				"3": { "name": "support.type.ntriples" }
+ 			}
+ 		},
+ 		{
+ 			"name":		"comment.line.number-sign.sparql",
+ 			"comment":	"Comments",
+ 			"match":	"#.*$"
+ 		}
+ 	]
+}
