@@ -5,6 +5,7 @@
 	<key>fileTypes</key>
 	<array>
 		<string>rq</string>
+		<string>sparql</string>
 	</array>
 	<key>name</key>
 	<string>SPARQL</string>
